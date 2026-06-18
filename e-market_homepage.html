@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Market - Page d'accueil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #0B5D3B;
+            --secondary-color: #FDFBF2;
+        }
+
+        body {
+            background-color: #FFFFFF;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--secondary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Main Nav */
+        .main-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #0a4a2f;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            padding: 8px 15px;
+            border: 1px solid var(--primary-color);
+            outline: none;
+            width: 250px;
+            background-color: #BBBBBB;
+            border-radius: 10px;
+
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            background-color: #FDFBF2;
+            color: #999999;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-container button:hover {
+            background-color: #FDFBF2;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-actions a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cart-count {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Main Content Layout */
+        .main-content-wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* Sidebar Menu */
+        .sidebar {
+            width: 250px;
+            min-width: 250px;
+            background-color: var(--primary-color);
+            min-height: calc(100vh - 160px);
+            padding: 20px 0;
+        }
+
+        .sidebar h3 {
+            color: white;
+            padding: 0 20px 15px;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #FFFFFF;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #128a57 100%);
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .hero .btn:hover {
+            background-color: #f0ebe0;
+            transform: scale(1.05);
+        }
+
+        /* Features */
+        .features {
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .feature-item {
+            padding: 40px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            background-color: #FDFBF2;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-item h3 {
+            margin: 15px 0 10px;
+            color: var(--primary-color);
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size:small;
+        }
+
+        .div1 {
+            background-color: #0B5D3B;
+            border: solid;
+            border-color: #0B5D3B;
+            border-radius: 30px;
+            color: #FDFBF2;
+            font-family:'Times New Roman', Times, serif;
+            width: 100%;
+            height: 3%;
+            text-align: center;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 32px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid rgba(11, 93, 59, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .product-info .price {
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .product-info .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .product-info .btn:hover {
+            background-color: #0a4a2f;
+        }
+
+        .image-container {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    overflow: hidden; /* Empêche le débordement */
+    border-radius: 10px; /* Facultatif */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Remplit le cadre sans déformer */
+}
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            Bienvenue sur E-Market ! Livraison gratuite dès 15 000 FCFA
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="main-nav">
+                <!-- Logo -->
+                <div class="logo">
+                    <img src="C:\Users\HP 1030 G3\Downloads\E-Market(1).png" alt="E-Market Logo">
+                </div>
+
+                <!-- Navigation Links -->
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input type="text" placeholder="Rechercher un produit..." class="inputSearch">
+                    <button type="button">🔍</button>
+                </div>
+
+                <!-- Nav Actions -->
+                <div class="nav-actions">
+                    <a href="#">👤 Se connecter</a>
+                    <a href="#">
+                        🛒 Panier
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content with Sidebar -->
+    <div class="main-content-wrapper">
+        <!-- Sidebar Category Menu -->
+        <aside class="sidebar">
+            <h3>Catégories</h3>
+            <ul>
+                <li><a href="#">Alimentations</a></li>
+                <li><a href="#">Vêtements</a></li>
+                <li><a href="#">Technologies</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Bienvenue sur E-Market</h1>
+                <p>Découvrez nos produits de qualité à des prix imbattables !</p>
+            </section>
+                <div class="div1">
+                    <h2>Alimentations</h2>
+                </div>
+            <!-- Features Section -->
+            <section class="features">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/legumes.jpg" alt="Légumes">
+                        </div>
+                        <h3>Légumes</h3>
+                        <p><b>Frais<br>A bon Prix</b></p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/fruits.webp" alt="fruits">
+                        </div>
+                        <h3>Fruits</h3>
+                        <p><b>Frais<br>Remplis de Vitamines</b></p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/viande.jpg" alt="Viandes">
+                        </div>
+                        <h3>Viandes</h3>
+                        <p><b>Frais<br>Remplies Protéines et Vitamines B12</b></p>
+                    </div>
+                </div>
+            </section>
+                <div class="div1">
+                    <h2>Vêtements</h2>
+                </div>
+            <!-- Features Section -->
+            <section class="features">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/chaussure.jpg" alt="Chaussures">
+                        </div>
+                        <h3>Chaussures</h3>
+                        <p><b>Hommes et Femmes<br>Toutes les marques sont disponibles</b></p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/femme.jpg" alt="Vêtements Femmes">
+                        </div>
+                        
+                        <h3>Vêtements Femmes</h3>
+                        <p><b>Classes et Stylés<br>Votre Bien notre Priorité</b></p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/homme.jpg" alt="Vêtements Hommes">
+                        </div>
+                        
+                        <h3>Vêtements Hommes</h3>
+                        <p><b>Classes et Stylés<br>Votre Bien notre Priorité</b></p>
+                    </div>
+                </div>
+            </section>
+                <div class="div1">
+                    <h2>Technologies</h2>
+                </div>
+            <!-- Features Section -->
+            <section class="features">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/ordinateurs.jpg" alt="Ordinateurs">
+                        </div>
+                        
+                        <h3>Ordinateurs</h3>
+                        <p><b>Qualités et Performances<br>à bon prix</b></p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/Electro.webp" alt="Electroménagers">
+                        </div>
+                        
+                        <h3>Electroménagers</h3>
+                        <p><b>Qualités<br>Facilitation de vos tâches ménagères</b></p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="image-container">
+                             <img src="./images/access.png" alt="Accessoires">
+                        </div>
+                        
+                        <h3>Accessoires</h3>
+                        <p><b>Qualités<br>pour vos divertissements</b></p>
+                    </div>
+                </div>
+            </section>
+                <div class="div1">
+                    <h2>Services Disponibles</h2>
+                </div>
+            <!-- Features Section -->
+            <section class="features">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div style="font-size: 48px;">🚚</div>
+                        <h3>Livraison Gratuite</h3>
+                        <p>Livraison gratuite pour toute commande de 15 000 FCFA et plus</p>
+                    </div>
+                    <div class="feature-item">
+                        <div style="font-size: 48px;">🔒</div>
+                        <h3>Paiement Sécurisé</h3>
+                        <p>Transactions 100% sécurisées et protégées</p>
+                    </div>
+                    <div class="feature-item">
+                        <div style="font-size: 48px;">📞</div>
+                        <h3>Support 24/7</h3>
+                        <p>Notre équipe est à votre disposition à tout moment</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>E-Market</h4>
+                    <p>Votre boutique en ligne de confiance pour tous vos achats.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens Rapides</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Catégories</h4>
+                    <ul>
+                        <li><a href="#">Alimentations</a></li>
+                        <li><a href="#">Vêtements</a></li>
+                        <li><a href="#">Technologies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">📧 contact@e-market.sn</a></li>
+                        <li><a href="#">📞 +221 33 234 67 89</a></li>
+                        <li><a href="#">📍 Safco, Tivaouane Peuhl, Sénégal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 E-Market. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
