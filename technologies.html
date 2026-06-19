@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Market - Technologie</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { --primary-color: #0B5D3B; --secondary-color: #FDFBF2; }
+        body { background-color: #FFFFFF; }
+
+        /* ── TOP BAR (identique page accueil) ── */
+        .top-bar { background-color: var(--primary-color); color: white; padding: 8px 0; font-size: 14px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* ── HEADER (identique page accueil) ── */
+        header { background-color: var(--secondary-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .main-nav { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; }
+        .logo { display: flex; align-items: center; }
+        .logo img { height: 80px; border-radius: 20px; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--primary-color); font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: #0a4a2f; }
+        .nav-links a.active { border-bottom: 2px solid var(--primary-color); padding-bottom: 2px; font-weight: 700; }
+        .search-container { display: flex; align-items: center; }
+        .search-container input { padding: 8px 15px; border: 1px solid var(--primary-color); outline: none; width: 250px; background-color: #BBBBBB; border-radius: 10px; }
+        .search-container button { padding: 8px 15px; background-color: #FDFBF2; color: #999999; border: none; border-radius: 0 20px 20px 0; cursor: pointer; }
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .nav-actions a { text-decoration: none; color: var(--primary-color); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+        .cart-count { background-color: var(--primary-color); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+        /* ── LAYOUT (identique page accueil) ── */
+        .main-content-wrapper { display: flex; max-width: 1400px; margin: 0 auto; padding: 0; }
+
+        /* ── SIDEBAR (identique page accueil) ── */
+        .sidebar { width: 250px; min-width: 250px; background-color: var(--primary-color); min-height: calc(100vh - 160px); padding: 20px 0; }
+        .sidebar h3 { color: white; padding: 0 20px 15px; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 10px; }
+        .sidebar ul { list-style: none; }
+        .sidebar a { display: block; padding: 12px 20px; color: white; text-decoration: none; transition: background-color 0.3s; }
+        .sidebar a:hover { background-color: rgba(255,255,255,0.15); }
+        .sidebar a.active { background-color: rgba(255,255,255,0.2); border-left: 3px solid #D9A441; font-weight: 600; }
+
+        /* ── MAIN CONTENT ── */
+        .main-content { flex: 1; padding: 20px; background-color: #FFFFFF; }
+
+        /* ── FIL D'ARIANE ── */
+        .breadcrumb { font-size: 13px; color: #666; margin-bottom: 16px; }
+        .breadcrumb a { color: var(--primary-color); text-decoration: none; }
+        .breadcrumb .sep { margin: 0 5px; color: #bbb; }
+
+        /* ── BANDEAU TITRE (identique .div1 page accueil) ── */
+        .div1 { background-color: #0B5D3B; border: solid; border-color: #0B5D3B; border-radius: 30px; color: #FDFBF2; font-family: 'Times New Roman', Times, serif; width: 100%; text-align: center; margin-bottom: 20px; padding: 4px 0; }
+
+        /* ── ICÔNES SOUS-CATÉGORIES (cliquables, pas d'image) ── */
+        .subcats-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+        .subcat-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 18px; background-color: #FDFBF2; border: 1px solid rgba(11,93,59,0.15); border-radius: 10px; cursor: pointer; text-decoration: none; color: var(--primary-color); font-size: 12px; font-weight: 500; transition: all 0.3s; min-width: 90px; }
+        .subcat-btn:hover, .subcat-btn.active { background-color: #e8f5ee; border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(11,93,59,0.12); }
+        .subcat-btn .icon { font-size: 26px; }
+
+        /* ── BANNIÈRE PROMO ── */
+        .hero { background: linear-gradient(135deg, var(--primary-color) 0%, #128a57 100%); color: white; padding: 20px 30px; border-radius: 10px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .hero .hero-text strong { font-size: 20px; display: block; margin-bottom: 4px; }
+        .hero .hero-text small { font-size: 14px; opacity: 0.9; }
+        .hero .btn-promo { display: inline-block; padding: 12px 30px; background-color: var(--secondary-color); color: var(--primary-color); text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.3s; }
+        .hero .btn-promo:hover { background-color: #f0ebe0; transform: scale(1.05); }
+
+        /* ── BARRE TRI + FILTRES ── */
+        .products-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+        .results-count { font-size: 14px; color: #555; }
+        .results-count strong { color: var(--primary-color); }
+        .sort-group { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #555; }
+        .sort-group select { padding: 6px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
+        .filters-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+        .filter-chip { padding: 6px 14px; border: 1px solid #ddd; border-radius: 20px; font-size: 12px; cursor: pointer; background: white; color: #444; }
+        .filter-chip.active { border-color: var(--primary-color); background: #e8f5ee; color: var(--primary-color); font-weight: 600; }
+
+        /* ── GRILLE PRODUITS (même base que page accueil) ── */
+        .products { background-color: white; border-radius: 10px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+
+        .product-card { background-color: white; border: 1px solid rgba(11,93,59,0.1); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; position: relative; }
+        .product-card:hover { transform: translateY(-5px); }
+
+        /* Zone image */
+        .product-image { height: 200px; background-color: var(--secondary-color); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Badge promo/nouveau */
+        .badge { position: absolute; top: 10px; left: 10px; padding: 3px 9px; border-radius: 5px; font-size: 11px; font-weight: 700; color: white; z-index: 2; }
+        .badge-promo { background: #c0392b; }
+        .badge-new { background: var(--primary-color); }
+
+        /* Bouton cœur favoris */
+        .wishlist-btn { position: absolute; top: 10px; right: 10px; background: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 2; transition: transform 0.2s; }
+        .wishlist-btn:hover { transform: scale(1.15); }
+
+        /* Infos produit (même style que page accueil) */
+        .product-info { padding: 20px; }
+        .seller-tag { font-size: 11px; color: #888; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+        .seller-tag .verified { color: #2e7d32; }
+        .product-info h3 { margin-bottom: 8px; color: var(--primary-color); font-size: 14px; line-height: 1.4; }
+        .stars { font-size: 13px; color: #D9A441; margin-bottom: 8px; }
+        .stars .count { color: #888; font-size: 11px; margin-left: 3px; }
+        .product-info .price { color: var(--primary-color); font-size: 20px; font-weight: bold; margin-bottom: 14px; }
+        .price-old { color: #aaa; font-size: 13px; text-decoration: line-through; font-weight: normal; margin-left: 6px; }
+        .product-info .btn { display: block; width: 100%; padding: 10px; background-color: var(--primary-color); color: white; text-align: center; text-decoration: none; border-radius: 5px; transition: background-color 0.3s; border: none; cursor: pointer; font-size: 14px; font-weight: 500; }
+        .product-info .btn:hover { background-color: #0a4a2f; }
+
+        /* ── PAGINATION ── */
+        .pagination { display: flex; justify-content: center; gap: 6px; margin: 30px 0 20px; }
+        .pagination button { width: 36px; height: 36px; border-radius: 6px; border: 1px solid #ddd; background: white; font-size: 14px; cursor: pointer; }
+        .pagination button.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+        .pagination .prev-next { padding: 0 14px; width: auto; font-size: 13px; }
+
+        /* ── FOOTER (identique page accueil) ── */
+        footer { background-color: var(--primary-color); color: white; padding: 40px 0 20px; margin-top: 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .footer-section h4 { margin-bottom: 20px; font-size: 18px; }
+        .footer-section ul { list-style: none; }
+        .footer-section a { color: rgba(255,255,255,0.8); text-decoration: none; display: block; margin-bottom: 8px; transition: color 0.3s; }
+        .footer-section a:hover { color: white; }
+        .copyright { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR (identique page accueil) -->
+    <div class="top-bar">
+        <div class="container">
+            Bienvenue sur E-Market ! Livraison gratuite dès 15 000 FCFA
+        </div>
+    </div>
+
+    <!-- HEADER (identique page accueil) -->
+    <header>
+        <div class="container">
+            <div class="main-nav">
+                <div class="logo">
+                    <img src="images/logo.jpeg" alt="E-Market Logo">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="search-container">
+                    <input type="text" placeholder="Rechercher un produit..." class="inputSearch">
+                    <button type="button">🔍</button>
+                </div>
+                <div class="nav-actions">
+                    <a href="#">👤 Se connecter</a>
+                    <a href="#">🛒 Panier <span class="cart-count">0</span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="main-content-wrapper">
+
+        <!-- SIDEBAR (identique page accueil) -->
+        <aside class="sidebar">
+            <h3>Catégories</h3>
+            <ul>
+                <li><a href="#">Alimentations</a></li>
+                <li><a href="#">Vêtements</a></li>
+                <li><a href="#" class="active">Technologies</a></li>
+            </ul>
+        </aside>
+
+        <!-- CONTENU PRINCIPAL -->
+        <main class="main-content">
+
+            <!-- Fil d'ariane -->
+            <div class="breadcrumb">
+                <a href="index.html">Home</a><span class="sep">›</span>Technologies
+            </div>
+
+            <!-- Titre section (même style .div1 que page accueil) -->
+            <div class="div1">
+                <h2>Rayon Technologie</h2>
+            </div>
+
+            <!-- Icônes sous-catégories cliquables -->
+            <div class="subcats-grid">
+                <a href="#" class="subcat-btn active">
+                    <span class="icon">📱</span>
+                    <span>Téléphones</span>
+                </a>
+                <a href="#" class="subcat-btn">
+                    <span class="icon">💻</span>
+                    <span>Ordinateurs</span>
+                </a>
+                <a href="#" class="subcat-btn">
+                    <span class="icon">⌚</span>
+                    <span>Montres</span>
+                </a>
+                <a href="#" class="subcat-btn">
+                    <span class="icon">🎧</span>
+                    <span>Audio</span>
+                </a>
+                <a href="#" class="subcat-btn">
+                    <span class="icon">📺</span>
+                    <span>TV</span>
+                </a>
+                <a href="#" class="subcat-btn">
+                    <span class="icon">🖨️</span>
+                    <span>Imprimantes</span>
+                </a>
+            </div>
+
+            <!-- Bannière promo -->
+            <div class="hero">
+                <div class="hero-text">
+                    <strong>⚡ Offres Tech de la semaine</strong>
+                    <small>Jusqu'à -45% sur les smartphones et ordinateurs sélectionnés</small>
+                </div>
+                <a href="#" class="btn-promo">Voir les offres</a>
+            </div>
+
+            <!-- Barre résultats + tri -->
+            <div class="products-topbar">
+                <div class="results-count"><strong>570</strong> produits trouvés</div>
+                <div class="sort-group">
+                    Trier par
+                    <select>
+                        <option>Popularité</option>
+                        <option>Prix croissant</option>
+                        <option>Prix décroissant</option>
+                        <option>Nouveautés</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters-bar">
+                <span style="font-size:13px;color:#555;">Filter :</span>
+                <button class="filter-chip active">Tous</button>
+                <button class="filter-chip">Samsung</button>
+                <button class="filter-chip">Xiaomi</button>
+                <button class="filter-chip">Lenovo</button>
+                <button class="filter-chip">Meilleure qualité</button>
+                <button class="filter-chip">-50 000</button>
+                <button class="filter-chip">50 000-150k</button>
+                <button class="filter-chip">+150k</button>
+            </div>
+
+            <!-- GRILLE PRODUITS -->
+            <section class="products">
+                <div class="products-grid">
+
+                    <!-- Produit 1 : Samsung Galaxy A15 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="badge badge-promo">-35%</span>
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/samsung_a15.jpg" alt="Samsung Galaxy A15">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> TechShop Dakar</div>
+                            <h3>Samsung Galaxy A15 128Go 4G</h3>
+                            <div class="stars">⭐⭐⭐⭐½ <span class="count">(128 avis)</span></div>
+                            <div class="price">89 000 FCFA <span class="price-old">137 000</span></div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                    <!-- Produit 2 : Lenovo IdeaPad -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="badge badge-new">Nouveau</span>
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/lenovo_ideapad.jpg" alt="Lenovo IdeaPad">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> TechShop Dakar</div>
+                            <h3>Lenovo IdeaPad 1 8Go RAM 256Go SSD 15.6"</h3>
+                            <div class="stars">⭐⭐⭐⭐⭐ <span class="count">(44 avis)</span></div>
+                            <div class="price">184 000 FCFA</div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                    <!-- Produit 3 : Xiaomi Band 8 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="badge badge-promo">-20%</span>
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/xiaomi_band8.jpg" alt="Xiaomi Smart Band 8">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> MobilePro SN</div>
+                            <h3>Xiaomi Smart Band 8 Montre connectée Sport</h3>
+                            <div class="stars">⭐⭐⭐⭐ <span class="count">(67 avis)</span></div>
+                            <div class="price">28 000 FCFA <span class="price-old">35 000</span></div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                    <!-- Produit 4 : Canon EOS 2000D -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/canon_eos.jpg" alt="Canon EOS 2000D">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> TechShop Dakar</div>
+                            <h3>Appareil Photo Reflex Canon EOS 2000D</h3>
+                            <div class="stars">⭐⭐⭐⭐⭐ <span class="count">(19 avis)</span></div>
+                            <div class="price">245 000 FCFA</div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                    <!-- Produit 5 : TCL TV -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="badge badge-new">Nouveau</span>
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/tcl_tv.jpg" alt="TCL TV LED 43">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> DigiStore SN</div>
+                            <h3>TCL TV LED 43" Smart Android 4K Ultra HD</h3>
+                            <div class="stars">⭐⭐⭐⭐ <span class="count">(58 avis)</span></div>
+                            <div class="price">195 000 FCFA</div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                    <!-- Produit 6 : HP DeskJet -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="badge badge-promo">-31%</span>
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/hp_deskjet.jpg" alt="HP DeskJet 2320">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> MobilePro SN</div>
+                            <h3>HP DeskJet 2320 Imprimante Multifonction WiFi</h3>
+                            <div class="stars">⭐⭐⭐⭐ <span class="count">(31 avis)</span></div>
+                            <div class="price">37 900 FCFA <span class="price-old">55 000</span></div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                    <!-- Produit 7 : Écran Samsung -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="badge badge-promo">-18%</span>
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/samsung_ecran.jpg" alt="Écran Samsung 24">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> TechShop Dakar</div>
+                            <h3>Écran PC Samsung 24" Full HD 75Hz</h3>
+                            <div class="stars">⭐⭐⭐⭐½ <span class="count">(23 avis)</span></div>
+                            <div class="price">78 000 FCFA <span class="price-old">95 000</span></div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                    <!-- Produit 8 : Kit Gaming RGB -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="badge badge-new">Nouveau</span>
+                            <button class="wishlist-btn" title="Ajouter aux favoris">🤍</button>
+                            <img src="./images/kit_gaming.jpg" alt="Kit Gaming RGB">
+                        </div>
+                        <div class="product-info">
+                            <div class="seller-tag"><span class="verified">✓</span> DigiStore SN</div>
+                            <h3>Kit complet Gaming RGB</h3>
+                            <div class="stars">⭐⭐⭐⭐⭐ <span class="count">(76 avis)</span></div>
+                            <div class="price">32 500 FCFA</div>
+                            <button class="btn">Ajouter au panier</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="prev-next">← Précédent</button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <button class="prev-next">Suivant →</button>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- FOOTER (identique page accueil) -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>E-Market</h4>
+                    <p>Votre boutique en ligne de confiance pour tous vos achats.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens Rapides</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Catégories</h4>
+                    <ul>
+                        <li><a href="#">Alimentations</a></li>
+                        <li><a href="#">Vêtements</a></li>
+                        <li><a href="#">Technologies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">📧 contact@e-market.sn</a></li>
+                        <li><a href="#">📞 +221 33 234 67 89</a></li>
+                        <li><a href="#">📍 Safco, Tivaouane Peuhl, Sénégal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2026 E-Market. Tous droits réservés.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Filtres chips
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            });
+        });
+
+        // Sous-catégories cliquables
+        document.querySelectorAll('.subcat-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelectorAll('.subcat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Cœur favoris
+        document.querySelectorAll('.wishlist-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+            });
+        });
+
+        // Panier
+        let count = 0;
+        document.querySelectorAll('.product-info .btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                count++;
+                document.querySelector('.cart-count').textContent = count;
+                btn.textContent = '✓ Ajouté !';
+                setTimeout(() => { btn.textContent = 'Ajouter au panier'; }, 1200);
+            });
+        });
+    </script>
+
+</body>
+</html>
