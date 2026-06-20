@@ -1,0 +1,255 @@
+<!doctype html>
+<!--
+  index.html
+  Reproduction fidèle de la maquette — HTML5 + Bootstrap 5 + CSS
+  Ne contient pas de JavaScript (contraintes respectées)
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Market — Boutique</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top banner (bannière supérieure) -->
+  <header class="site-header">
+    <div class="header-accent" aria-hidden="true"></div>
+    <div class="container header-inner d-flex align-items-center justify-content-between">
+      <div class="brand-logo">
+        <!-- logo placé en haut à gauche -->
+        <img src="logo.jpeg" alt="E-Market" class="logo-img">
+      </div>
+      <div class="header-text">AFFIRMEZ VOTRE STYLE AU QUOTIDIEN</div>
+      <div class="header-spacer"></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section py-5">
+      <div class="container">
+        <div class="row gx-0 align-items-center justify-content-center">
+          <div class="col-12">
+            <div class="hero-card position-relative">
+              <div class="hero-content p-4 p-lg-5">
+                <p class="hero-label">NOUVELLE COLLECTION</p>
+                <h1 class="hero-title">Portez votre style</h1>
+                <p class="hero-text">Découvrez notre collection de vêtements et accessoires sélectionnés pour un style affirmé, élégant et confortable au quotidien.</p>
+                <a href="#collection" class="btn btn-emerald mt-4">DÉCOUVRIR LA COLLECTION</a>
+              </div>
+
+              <div class="hero-visual position-relative mt-4 mt-lg-0">
+                <div class="hero-circle" aria-hidden="true"></div>
+                <img src="assets/hero.jpg" alt="Collection E-Market" class="hero-img img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS: HOMME -->
+    <section id="collection" class="product-section container mb-5">
+      <div class="section-title">Vêtement HOMME</div>
+      <div class="row g-4 mt-3">
+        <!-- product card (repeat for 4 items) -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/homme1-t-shirt.jpg" class="card-img-top" alt="T-shirt">
+            <div class="card-body text-center">
+              <h6 class="product-name">T-shirt</h6>
+              <p class="product-desc">T-shirt confortable, coupe régulière.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">7.000 FCFA</span>
+                <span class="price-new">5.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/homme4-polo.jpg" class="card-img-top" alt="Polo">
+            <div class="card-body text-center">
+              <h6 class="product-name">Polo</h6>
+              <p class="product-desc">Polo élégant, finition soignée.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">10.000 FCFA</span>
+                <span class="price-new">7.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/homme5-pantalon.jpg" class="card-img-top" alt="Pantalon">
+            <div class="card-body text-center">
+              <h6 class="product-name">Pantalon</h6>
+              <p class="product-desc">Pantalon moderne, tissu résistant.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">12.000 FCFA</span>
+                <span class="price-new">8.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/homme3-ensemble.jpg" class="card-img-top" alt="Ensemble">
+            <div class="card-body text-center">
+              <h6 class="product-name">Ensemble</h6>
+              <p class="product-desc">Ensemble coordonné, look soigné.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">8.000 FCFA</span>
+                <span class="price-new">6.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEMME -->
+      <div class="section-title mt-5">Vêtement FEMME</div>
+      <div class="row g-4 mt-3">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/femme1-body.jpg" class="card-img-top" alt="Body">
+            <div class="card-body text-center">
+              <h6 class="product-name">Body</h6>
+              <p class="product-desc">Body féminin, coupe élégante.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">15.000 FCFA</span>
+                <span class="price-new">10.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/femme2-robe.jpg" class="card-img-top" alt="Robe">
+            <div class="card-body text-center">
+              <h6 class="product-name">Robe</h6>
+              <p class="product-desc">Robe légère, tissu imprimé.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">10.000 FCFA</span>
+                <span class="price-new">7.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/femme3-bas-large.jpg" class="card-img-top" alt="Bas large">
+            <div class="card-body text-center">
+              <h6 class="product-name">Bas large</h6>
+              <p class="product-desc">Bas large, confort et style.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">8.000 FCFA</span>
+                <span class="price-new">6.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/femme7-robe.jpg" class="card-img-top" alt="Robe">
+            <div class="card-body text-center">
+              <h6 class="product-name">Robe</h6>
+              <p class="product-desc">Robe élégante, coupe fluide.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">8.000 FCFA</span>
+                <span class="price-new">6.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOMME & FEMME -->
+      <div class="section-title mt-5">Vêtement HOMME & FEMME</div>
+      <div class="row g-4 mt-3 mb-5">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/homme6-t-shirt.jpg" class="card-img-top" alt="T-shirt">
+            <div class="card-body text-center">
+              <h6 class="product-name">T-shirt</h6>
+              <p class="product-desc">T-shirt unisexe, matière douce.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">8.000 FCFA</span>
+                <span class="price-new">6.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/homme2-pull.jpg" class="card-img-top" alt="Pull">
+            <div class="card-body text-center">
+              <h6 class="product-name">Pull</h6>
+              <p class="product-desc">Pull chaud, finitions renforcées.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">8.000 FCFA</span>
+                <span class="price-new">5.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/femme5-ensemble-pull.jpg" class="card-img-top" alt="Ensemble/pull">
+            <div class="card-body text-center">
+              <h6 class="product-name">Ensemble / Pull</h6>
+              <p class="product-desc">Ensemble mixte, style décontracté.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">8.000 FCFA</span>
+                <span class="price-new">6.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card product-card">
+            <img src="assets/femme6-ensemble-pull.jpg" class="card-img-top" alt="Ensemble/pull">
+            <div class="card-body text-center">
+              <h6 class="product-name">Ensemble / Pull</h6>
+              <p class="product-desc">Pièce mixte, design contemporain.</p>
+              <div class="price-box mx-auto">
+                <span class="price-old">14.000 FCFA</span>
+                <span class="price-new">9.000 FCFA</span>
+              </div>
+              <button class="btn btn-add mt-2">AJOUTER AU PANIER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer py-4 text-center text-muted">
+    © 2026 E-Market
+  </footer>
+
+</body>
+</html>
